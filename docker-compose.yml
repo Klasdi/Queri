@@ -1,0 +1,32 @@
+networks:
+  deploy-quire-dev:
+    driver: bridge
+
+services:
+  app: 
+    container_name: deploy-quire
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+     - "80:80"
+    networks:
+     - deploy-quire-dev
+    depends_on:
+     - postgres_db
+    volumes:
+     - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  postgres_db:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+     POSTGRES_USER: postgres
+     POSTGRES_PASSWORD: 1499
+     POSTGRES_DB: deploy-quesdb
+    networks:
+     - deploy-quire-dev
+    volumes:
+     - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
