@@ -12,8 +12,8 @@ namespace Queri.Model
         public DateTime? UpdateTime { get; set; }
         public bool IsActive { get; set; }
 
-        public ICollection<Question> Questions { get; set; } = new List<Question>();
+        public virtual ICollection<Question> Questions { get; set; } = new List<Question>();
 
-        public ICollection<Interview> Interviews { get; set; } = new List<Interview>();
+        public virtual ICollection<Interview> Interviews { get; set; } = new List<Interview>();
     }
 }

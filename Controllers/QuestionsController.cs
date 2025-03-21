@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Queri.Services;
 
 namespace Queri.Controllers
 {
@@ -7,52 +7,24 @@ namespace Queri.Controllers
     [Route("api/surveys/{surveyId}/questions")]
     public class QuestionsController : Controller
     {
-        private readonly ApplicationContext _context;
+        private readonly QuestionsServicesDto _questionsServicesDto;
 
-        public QuestionsController(ApplicationContext context)
+        public QuestionsController(QuestionsServicesDto questionsServicesDto)
         {
-            _context = context;
+            _questionsServicesDto = questionsServicesDto;
         }
         [HttpGet("{questionId}")]
         public async Task<IActionResult> GetQuestion(int surveyId, int questionId)
         {
-            var question = await _context.Questions
-                .Include(x => x.Answers)
-                .FirstOrDefaultAsync(x => x.Id == questionId && x.SurveyId == surveyId);
-
-            if (question == null)
+            try
             {
-                return NotFound();
+                var result = await _questionsServicesDto.GetQuestions(questionId, surveyId);
+                return Ok(result);
             }
-
-            var result = new
+            catch(Exception ex)
             {
-                question.Id,
-                question.Name,
-                question.TypeAnswer,
-                Answers = question.Answers.Select(x => new { x.Id, x.Name, x.SerialNumber})
-            };
-
-            return Ok(result);
+                return NotFound(ex);
+            }
         }
-
-        // GET: Questions/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var question = await _context.Questions
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (question == null)
-            {
-                return NotFound();
-            }
-
-            return View(question);
-        }
-
     }
 }

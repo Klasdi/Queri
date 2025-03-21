@@ -11,10 +11,9 @@ namespace Queri.Model
         public DateTime StartTime { get; set; }
         public DateTime? FinishTime { get; set; }
         public Status Status { get; set; }
-
         public int SurveyId { get; set; }
-        public Survey? Survey { get; set; }
-        public ICollection<Result> Results { get; set; } = new List<Result>();
+        public virtual Survey? Survey { get; set; }
+        public virtual ICollection<Result> Results { get; set; } = new List<Result>();
     }
     public enum Status
     {

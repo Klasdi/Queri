@@ -10,7 +10,7 @@ namespace Queri.Model
         public int SerialNumber { get; set; }
 
         public int QuestionId { get; set; }
-        public Question? Question { get; set; }
-        public ICollection<Result> Results { get; set; } = new List<Result>();
+        public virtual Question? Question { get; set; }
+        public virtual ICollection<Result> Results { get; set; } = new List<Result>();
     }
 }

@@ -15,9 +15,9 @@ namespace Queri.Model
         [NotMapped]
         public Survey? Survey { get; set; }
 
-        public ICollection<Answer> Answers { get; set; } = new List<Answer>();
+        public virtual ICollection<Answer> Answers { get; set; } = new List<Answer>();
 
-        public ICollection<Result> Results { get; set; } = new List<Result>();
+        public virtual ICollection<Result> Results { get; set; } = new List<Result>();
     }
     public enum TypeAnser
     {

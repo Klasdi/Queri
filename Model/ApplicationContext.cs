@@ -13,6 +13,10 @@ public class ApplicationContext : DbContext
     {
         Database.EnsureCreated();
     }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseLazyLoadingProxies();
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         //Для быстрого поиска ответа по заданной сессии и вопросу
